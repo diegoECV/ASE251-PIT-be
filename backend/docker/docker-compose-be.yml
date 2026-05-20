@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: dockerfile
+    container_name: ase251-pit-backend
+    environment:
+      SPRING_APPLICATION_NAME: backend
+      SPRING_DATASOURCE_URL: "jdbc:sqlserver://db:1433;databaseName=dbsiste;encrypt=true;trustServerCertificate=true"
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: "${MSSQL_SA_PASSWORD:-Diego1416}"
+      SERVER_PORT: "8080"
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - pit-net
+
+networks:
+  pit-net:
+    name: ase251-pit-net

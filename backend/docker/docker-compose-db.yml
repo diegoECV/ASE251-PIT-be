@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ase251-pit-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-Diego1416}"
+      MSSQL_PID: "Developer"
+      MSSQL_TCP_PORT: "1433"
+    ports:
+      - "1437:1433"
+    # host port mapped to 1437:1433 so you can connect from the host at localhost:1437
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
+    networks:
+      - pit-net
+
+volumes:
+  sqlserver_data:
+
+networks:
+  pit-net:
+    name: ase251-pit-net
